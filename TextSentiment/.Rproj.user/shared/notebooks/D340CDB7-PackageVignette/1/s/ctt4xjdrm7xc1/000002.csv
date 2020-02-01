@@ -1,0 +1,5 @@
+"0","data_with_sentiment <- get_batch_sentiment(dataset, ""eda0526b71ff44b29c259b9a37fa4970"", ""westcentralus"")
+"
+"2","Error in get_batch_sentiment(dataset, ""eda0526b71ff44b29c259b9a37fa4970"",  : 
+  could not find function ""get_batch_sentiment""
+"
