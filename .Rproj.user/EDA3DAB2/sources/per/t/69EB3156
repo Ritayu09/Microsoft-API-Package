@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580766577824.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3150133818",
+    "id" : "69EB3156",
+    "lastKnownWriteTime" : 1580767745,
+    "last_content_update" : 1580767745594,
+    "path" : "~/Desktop/TextSentiment/tests/testthat/testthat.R",
+    "project_path" : "tests/testthat/testthat.R",
+    "properties" : {
+        "cursorPosition" : "28,0",
+        "scrollLine" : "4"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

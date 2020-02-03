@@ -48,6 +48,7 @@ Function returns requested graph using ggplot2 library.
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
+\donttest{
 
 require(ggplot2)
 
@@ -62,5 +63,5 @@ sentiment_dist_plot(sentiment_data, negative_cutoff = 0.35, positive_start = 0.6
 # boxplot
 
 sentiment_dist_plot(sentiment_data, negative_cutoff = 0.3, positive_start = 0.6, graph_alpha = 0.75, graph_type = 'boxplot')
-
+}
 }

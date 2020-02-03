@@ -53,7 +53,7 @@ The API wrapper uses the Microsoft Cognitive Services - Text Analytics API. The 
 \href{https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v2-1/operations/56f30ceeeda5650db055a3c9}{API Documentation}
 }
 \examples{
-
+\donttest{
 require(httr)
 require(jsonlite)
 
@@ -64,5 +64,5 @@ dataset <- data.frame('text'=sent_data, 'language'=sent_lang)
 # auth_key is your unique API access key and has region associated with it
 
 sentiment_data <- get_batch_sentiment (dataset, "eda0526b71ff44b29c", "westcentralus")
-
+}
 }
