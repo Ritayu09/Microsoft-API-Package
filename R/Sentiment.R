@@ -26,7 +26,9 @@ api_results <- function(api_output) {
 
 # extracting any errors generated while retrieving sentiment score
 api_errors <- function(api_output) {
-  return(data.frame(matrix(unlist(api_output$errors), nrow=length(api_output$errors), byrow=T),stringsAsFactors=FALSE))
+  api_error_data <- data.frame(matrix(unlist(api_output$errors), nrow=length( api_output$errors), byrow=T),stringsAsFactors=FALSE)
+  names(api_error_data) <- c('Id', 'Error Message')
+  return(api_error_data)
 }
 
 # function consolidating all the above functions with exception handling
@@ -37,6 +39,7 @@ get_batch_sentiment <- function(data, auth_key, api_region) {
   data$Id <- c(1:length(data$text))
   # creating a temporary dataset to store results after each batch results are received. Results are appended to temp_data after processing each batch
   temp_data <- setNames(data.frame(matrix(ncol = 2, nrow = 0)), c("Id", "Sentiment Score"))
+  error_data <- setNames(data.frame(matrix(ncol = 2, nrow = 0)), c("Id", "Error Message"))
   split_data <- transform_dataframe(data)
   for (each_data in split_data) {
   json_data <- transform_data(each_data)
@@ -55,35 +58,47 @@ get_batch_sentiment <- function(data, auth_key, api_region) {
 
   # if-else statement to handle exceptions while receiving results from the microsoft API. If some error occurs then else statement will handle the error
         if (length(hitting_api$documents) == length(each_data$Id)) {
-        api_res <- api_results(hitting_api)
-        temp_data <- rbind(temp_data, api_res)
-        # if error occurs, output's error message and also returns sentiment score of all successfully processed batches
-        } else if (length(hitting_api$documents) < length(each_data$Id) & length(hitting_api$documents) > 0 ) {
           api_res <- api_results(hitting_api)
           temp_data <- rbind(temp_data, api_res)
-          cat("Error in Fetching some results\nError Message:\n", unlist(hitting_api$message),"\n", unlist(hitting_api$errors))
-        } else {
-          cat("Error in Fetching results\nError Message:\n", unlist(hitting_api$message), "\n", unlist(hitting_api$errors))
-          if (length(temp_data$Id) == 0) {
-            return(NA)
+          # if error occurs, output's error message and also returns sentiment score of all successfully processed batches
+        } else if (length(hitting_api$documents) < length(each_data$Id) & length(hitting_api$documents) > 0 ) {
+            api_res <- api_results(hitting_api)
+            if (length(hitting_api$errors) > 0) {
+              temp_errors <- api_errors(hitting_api)
+              error_data <- rbind(error_data, temp_errors)
+            }
+            temp_data <- rbind(temp_data, api_res)
+            if (length(hitting_api$message) > 0) {
+            cat("Addtional Message Returned:\n", unlist(hitting_api$message))
+            }
           } else {
-          data_with_sentiment <- merge(data, temp_data, by.x='Id', by.y = 'Id', all.x = TRUE)
-          data_with_sentiment$`Sentiment Score` <- as.numeric(data_with_sentiment$`Sentiment Score`)
-          return(data_with_sentiment)
+            if (length(hitting_api$errors) > 0) {
+              temp_errors <- api_errors(hitting_api)
+              error_data <- rbind(error_data, temp_errors)
+            }
+            if (length(hitting_api$message) > 0) {
+              cat("Addtional Message Returned:\n", unlist(hitting_api$message))
+            }
           }
-        }
   }
-  # return results for input data if no errors occured while getting sentiment score
-  data_with_sentiment <- merge(data, temp_data, by.x='Id', by.y = 'Id', all.x = TRUE)
-  data_with_sentiment$`Sentiment Score` <- as.numeric(data_with_sentiment$`Sentiment Score`)
-  return(data_with_sentiment)
-  # else statement if the dataset input is not in correct format.
+
+  if (length(error_data$Id)>0) {
+    write.csv(error_data, 'Error_Log.csv')
+    cat('Check Error_Log.csv file for generated errors.')
+  }
+
+  if (length(temp_data$Id) == 0) {
+    return(NA)
+  } else {
+    data_with_sentiment <- merge(data, temp_data, by.x='Id', by.y = 'Id', all.x = TRUE)
+    data_with_sentiment$`Sentiment Score` <- as.numeric(data_with_sentiment$`Sentiment Score`)
+    return(data_with_sentiment)
+  }
   } else {
     cat("Error: Dataframe not passed in correct format. Read documentation for correct format.")
     return(NA)
   }
 }
-
 
 # distribution plot for retrieved sentiment score under negative, neutral and positive sentiment
 sentiment_dist_plot <- function(data, negative_cutoff = 0.35, positive_start = 0.65, graph_alpha = 0.5, graph_type = 'density') {
