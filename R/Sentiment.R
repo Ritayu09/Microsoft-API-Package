@@ -1,7 +1,7 @@
 
 # splitting dataset for batch requests - microsoft api allows 100 requests per collection
-transform_dataframe <- function(dataset){
-  return(split(dataset, (as.numeric(rownames(dataset))-1) %/% 100))
+transform_dataframe <- function(dataset, batch){
+  return(split(dataset, (as.numeric(rownames(dataset))-1) %/% batch))
 }
 
 # transforming dataset into json format as required for POST request
@@ -32,7 +32,7 @@ api_errors <- function(api_output) {
 }
 
 # function consolidating all the above functions with exception handling
-get_batch_sentiment <- function(data, auth_key, api_region) {
+get_batch_sentiment <- function(data, auth_key, api_region, batch_size=100) {
   # checking if input dataset is in correct format
   if (sum(c('language', 'text') %in% colnames(data)) == 2) {
   # adding id to dataset; necessary for sending request to api
@@ -41,7 +41,7 @@ get_batch_sentiment <- function(data, auth_key, api_region) {
   temp_data <- setNames(data.frame(matrix(ncol = 2, nrow = 0)), c("Id", "Sentiment Score"))
   error_data <- setNames(data.frame(matrix(ncol = 2, nrow = 0)), c("Id", "Error Message"))
   failure_message <-''
-  split_data <- transform_dataframe(data)
+  split_data <- transform_dataframe(data, batch_size)
   for (each_data in split_data) {
   json_data <- transform_data(each_data)
   # try except handling to make sure that api URL is correct. Wrong region input will result in error.
@@ -69,7 +69,7 @@ get_batch_sentiment <- function(data, auth_key, api_region) {
               error_data <- rbind(error_data, temp_errors)
             }
             temp_data <- rbind(temp_data, api_res)
-            if (length(hitting_api$message) > 0 & unlist(hitting_api$message != failure_message) {
+            if (length(hitting_api$message) > 0 & unlist(hitting_api$message) != failure_message) {
               failure_message = unlist(hitting_api$message)
               cat("Addtional Message Returned:\n", unlist(hitting_api$message))
             }
@@ -78,7 +78,7 @@ get_batch_sentiment <- function(data, auth_key, api_region) {
               temp_errors <- api_errors(hitting_api)
               error_data <- rbind(error_data, temp_errors)
             }
-            if (length(hitting_api$message) > 0 & unlist(hitting_api$message != failure_message) {
+            if (length(hitting_api$message) > 0 & unlist(hitting_api$message) != failure_message) {
               failure_message = unlist(hitting_api$message)
               cat("Addtional Message Returned:\n", unlist(hitting_api$message))
             }

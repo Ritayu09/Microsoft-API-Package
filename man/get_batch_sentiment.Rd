@@ -10,7 +10,7 @@ Sentiment Score Calculation
 The function send batch request (100 IDs per request) to microsoft sentiment analysis API and get a sentiment score between 0 to 1 for each textual data point. Each document/sentence size should not exceed 5,120 character.
 }
 \usage{
-get_batch_sentiment(data, auth_key, api_region)
+get_batch_sentiment(data, auth_key, api_region, batch_size)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -21,6 +21,9 @@ get_batch_sentiment(data, auth_key, api_region)
 %%     ~~Describe \code{x} here~~
 }
 \item{api_region}{ Provide region for which the authorization key is valid.
+%%     ~~Describe \code{x} here~~
+}
+\item{batch_size}{ Default batch size is 100 considering free API trial. Change accordingly based on your paid subscription.
 %%     ~~Describe \code{x} here~~
 }
 }
