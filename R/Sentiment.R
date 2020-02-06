@@ -69,18 +69,22 @@ get_batch_sentiment <- function(data, auth_key, api_region, batch_size = 100) {
               error_data <- rbind(error_data, temp_errors)
             }
             temp_data <- rbind(temp_data, api_res)
-            if (length(hitting_api$message) > 0 & unlist(hitting_api$message) != failure_message) {
+            if (length(hitting_api$message) > 0) {
+              if (unlist(hitting_api$message) != failure_message) {
               failure_message = unlist(hitting_api$message)
               cat("Addtional Message Returned:\n", unlist(hitting_api$message))
+              }
             }
           } else {
             if (length(hitting_api$errors) > 0) {
               temp_errors <- api_errors(hitting_api)
               error_data <- rbind(error_data, temp_errors)
             }
-            if (length(hitting_api$message) > 0 & unlist(hitting_api$message) != failure_message) {
+            if (length(hitting_api$message) > 0) {
+              if (unlist(hitting_api$message) != failure_message) {
               failure_message = unlist(hitting_api$message)
               cat("Addtional Message Returned:\n", unlist(hitting_api$message))
+              }
             }
           }
   }
