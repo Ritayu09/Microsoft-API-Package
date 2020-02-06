@@ -17,5 +17,6 @@ Imports:
     jsonlite,
     devtools,
     testthat,
-    knitr
+    knitr,
+    proto
 	
