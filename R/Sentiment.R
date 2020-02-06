@@ -32,7 +32,7 @@ api_errors <- function(api_output) {
 }
 
 # function consolidating all the above functions with exception handling
-get_batch_sentiment <- function(data, auth_key, api_region, batch_size=100) {
+get_batch_sentiment <- function(data, auth_key, api_region, batch_size = 100) {
   # checking if input dataset is in correct format
   if (sum(c('language', 'text') %in% colnames(data)) == 2) {
   # adding id to dataset; necessary for sending request to api
@@ -131,12 +131,6 @@ sentiment_dist_plot <- function(data, negative_cutoff = 0.35, positive_start = 0
     return("Error: 'Sentiment Score' column not provided in data.")
   }
 }
-
-
-
-
-
-
 
 
 
