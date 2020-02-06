@@ -40,6 +40,7 @@ get_batch_sentiment <- function(data, auth_key, api_region) {
   # creating a temporary dataset to store results after each batch results are received. Results are appended to temp_data after processing each batch
   temp_data <- setNames(data.frame(matrix(ncol = 2, nrow = 0)), c("Id", "Sentiment Score"))
   error_data <- setNames(data.frame(matrix(ncol = 2, nrow = 0)), c("Id", "Error Message"))
+  failure_message <-''
   split_data <- transform_dataframe(data)
   for (each_data in split_data) {
   json_data <- transform_data(each_data)
@@ -68,15 +69,17 @@ get_batch_sentiment <- function(data, auth_key, api_region) {
               error_data <- rbind(error_data, temp_errors)
             }
             temp_data <- rbind(temp_data, api_res)
-            if (length(hitting_api$message) > 0) {
-            cat("Addtional Message Returned:\n", unlist(hitting_api$message))
+            if (length(hitting_api$message) > 0 & unlist(hitting_api$message != failure_message) {
+              failure_message = unlist(hitting_api$message)
+              cat("Addtional Message Returned:\n", unlist(hitting_api$message))
             }
           } else {
             if (length(hitting_api$errors) > 0) {
               temp_errors <- api_errors(hitting_api)
               error_data <- rbind(error_data, temp_errors)
             }
-            if (length(hitting_api$message) > 0) {
+            if (length(hitting_api$message) > 0 & unlist(hitting_api$message != failure_message) {
+              failure_message = unlist(hitting_api$message)
               cat("Addtional Message Returned:\n", unlist(hitting_api$message))
             }
           }
