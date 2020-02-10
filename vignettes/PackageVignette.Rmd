@@ -2,7 +2,7 @@
 title: "Introduction to TextSentiment"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to dplyr}
+  %\VignetteIndexEntry{Introduction to TextSentiment}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

@@ -37,6 +37,7 @@ Function returns requested graph using ggplot2 library.
 }
 \author{
 %%  ~~who you are~~
+Ritayu Nagpal
 }
 \note{
 %%  ~~further notes~~

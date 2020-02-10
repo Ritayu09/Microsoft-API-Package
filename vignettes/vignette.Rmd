@@ -1,0 +1,83 @@
+---
+title: "Vignette Part 2"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Put the title of your vignette here}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+Typical Walkthrough for Sentiment Score determination via Microsoft text analytics api for batches of file and individual Rows in a text file
+-- 
+
+#### Step 1 : using get_batch_sentiment for gathering batch sentiments 
+Batch sentiment request function lets you to send request to API for sentiment score in batch of 100 documents/sentences and is suggested to use this function if number of data rows are more than 100. The sample dataset has 268 rows and batch request method should be used in this case.
+
+
+```{r }
+library(TextSentiment)
+data <- read.csv('test.csv')
+data_with_sentiment <- get_batch_sentiment(data, "55f27237f0eb405da8aaafdac3d29ee3", "westcentralus")
+```
+
+### Step 2: Display data where sentiment score is not obtained via the batch function
+
+```{r}
+data_to_be_updated = data_with_sentiment[is.na(data_with_sentiment$`Sentiment Score`),]
+data_to_be_updated
+```
+
+### Step 3: Find information about rows where sentiment score couldn't be obtained from error logs to know about the problem with the api calls.
+This can be done by looking at Error_log.csv file 
+
+
+```{r}
+failed <- read.csv('Error_Log.csv')
+failed
+```
+
+
+### Step 4: once we know that some rows were not updated with sentiments scores then we correct them and save those in a new csv file as below for record keeping purpose and for further processing.
+
+```{r}
+data_to_be_updated$language <- 'en'
+data_to_be_updated.2 = subset(data_to_be_updated, select = -c(`Sentiment Score`) )
+write.csv(data_to_be_updated.2,'finalTest.csv', row.names = FALSE)
+num = length(data_to_be_updated.2[,1])
+data_to_be_updated.2
+```
+
+### Step 5: Once new updated file with corrections is updated then we call the the other sentiments score function that runs through the csv files line by line to obtain the sentiments scores and also displays the error and other details 
+
+```{r}
+library(jsonlite)
+library(httr)
+IDs = 1:num
+key = '55f27237f0eb405da8aaafdac3d29ee3'
+data = textAnalysisFunction('finalTest.csv', IDs, key)
+```
+
+
+### Step 6: Once we have finished obtaining the sentiment scores for all rows in the dataframe we do some visualizations like error determination and sentimet scores by feature for example
+
+```{r, fig.width=8, fig.height=10}
+plotFunction(data)
+```
+
+### Another application of plot function to explore sentiments across type of user feedback like bugs, user experience, feature requests etc. using sample dataset as below
+
+```{r}
+df <- read.csv('sentiments.csv')
+head(df)
+```
+
+### 
+```{r, fig.width=8, fig.height=8}
+plotFunction(df)
+#?textAnalysisFunction
+```
+
+```{r, fig.width=8, fig.height=8}
+df = read.csv('test_out_incorrect_final.csv')
+plotStatusFunction(df)
+```

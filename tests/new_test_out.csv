@@ -1,0 +1,6 @@
+Id,Text,Score,length,type,error.code,error.message,url
+1,Helpful N Reliable,0.970237851,3,User Ex,NA,NA,https://westcentralus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment?showStats=1
+2,this is genius,0.995372832,3,User Ex,NA,NA,https://westcentralus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment?showStats=1
+3,help full app,0.779998422,3,User Ex,NA,NA,https://westcentralus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment?showStats=1
+4,notifications not works,0.752673924,3,Bug,NA,NA,https://westcentralus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment?showStats=1
+5,very good app,0.915953636,3,Rating,NA,NA,https://westcentralus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment?showStats=1
