@@ -44,7 +44,6 @@ The API wrapper uses the Microsoft Cognitive Services - Text Analytics API. The 
 }
 \author{
 %%  ~~who you are~~
-Ritayu Nagpal
 }
 \note{
 %%  ~~further notes~~

@@ -17,10 +17,10 @@ expected_result2 <- data.frame('Id' = c(1,2), 'text' = c('I am good Person', 'Th
 
 # testing sentiment score function
 test_that("sentiment score from text", {
-  sentiment_res <- get_batch_sentiment(data.test, "bf97f12aadaf43d3aeb180ebcd07edaf", "westcentralus")
+  sentiment_res <- get_batch_sentiment(data.test, "326352eacf604f5da7603e243e303f34", "westcentralus")
   sentiment_res1 <- get_batch_sentiment(data.test, "326352eacf604f5da7603e243e303f35", "westcentralus")
-  sentiment_res3 <- get_batch_sentiment(data.test2, "bf97f12aadaf43d3aeb180ebcd07edaf", "westcentralus")
-  sentiment_res4 <- get_batch_sentiment(data.test3, "bf97f12aadaf43d3aeb180ebcd07edaf", "westcentralus")
+  sentiment_res3 <- get_batch_sentiment(data.test2, "326352eacf604f5da7603e243e303f34", "westcentralus")
+  sentiment_res4 <- get_batch_sentiment(data.test3, "326352eacf604f5da7603e243e303f34", "westcentralus")
   expect_equal(sentiment_res, expected_result, tolerance = 0.00999)
   expect_equal(sentiment_res1, NA)
   expect_error(get_batch_sentiment(data.test, "eda0526b71ff44b29c259b9a37fa4911", "westcentralsu"))

@@ -1,11 +1,12 @@
 Package: TextSentiment
 Type: Package
-Title: Generates Text Sentiment Score Using Microsoft API
+Title: What the Package Does (Title Case)
 Version: 0.1.0
 Author: Who wrote it
-Maintainer: TextSentiment Team <TextSentiment@TextSentiment.net>
-Description: The package calculates sentiment score for text document using Microsoft Cognitive Services API. The package allows batch and individual post requests and also has functions to visualize the sentiment score.    
-License: MIT License
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Suggests: knitr, rmarkdown, testthat
