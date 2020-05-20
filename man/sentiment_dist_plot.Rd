@@ -54,14 +54,14 @@ require(ggplot2)
 
 # using get_batch_sentiment function available in the same package to generate sentiment score
 
-sentiment_data <- get_batch_sentiment (dataset, "eda0526b71ff44b29c", "westcentralus")
+# sentiment_data <- get_batch_sentiment (dataset, "eda0526b71ff44b29c", "westcentralus")
 
 # density plot
 
-sentiment_dist_plot(sentiment_data, negative_cutoff = 0.35, positive_start = 0.65, graph_alpha = 0.5, graph_type = 'density')
+# sentiment_dist_plot(sentiment_data, negative_cutoff = 0.35, positive_start = 0.65, graph_alpha = 0.5, graph_type = 'density')
 
 # boxplot
 
-sentiment_dist_plot(sentiment_data, negative_cutoff = 0.3, positive_start = 0.6, graph_alpha = 0.75, graph_type = 'boxplot')
+# sentiment_dist_plot(sentiment_data, negative_cutoff = 0.3, positive_start = 0.6, graph_alpha = 0.75, graph_type = 'boxplot')
 }
 }
