@@ -38,7 +38,7 @@ head(dataset)
 Batch sentiment request function lets you to send request to API for sentiment score in batch of 100 documents/sentences and is suggested to use this function if number of data rows are more than 100. The sample dataset has 268 rows and batch request method should be used in this case.   
 
 ```{r}
-data_with_sentiment <- get_batch_sentiment(dataset, "bf97f12aadaf43d3aeb180ebcd07edaf", "westcentralus")
+data_with_sentiment <- get_batch_sentiment(dataset, "cc2fb843f77948d592054109844a9152", "westcentralus")
 head(data_with_sentiment)
 ```
 *Note: An additional 'Id' column will also be created for the dataset passed to the function*

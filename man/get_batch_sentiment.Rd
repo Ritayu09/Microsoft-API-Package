@@ -66,6 +66,6 @@ dataset <- data.frame('text'=sent_data, 'language'=sent_lang)
 
 # auth_key is your unique API access key and has region associated with it
 
-sentiment_data <- get_batch_sentiment (dataset, "eda0526b71ff44b29c", "westcentralus")
+sentiment_data <- get_batch_sentiment(dataset, "eda0526b71ff44b29c", "westcentralus")
 }
 }
