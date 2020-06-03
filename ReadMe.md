@@ -1,4 +1,3 @@
-### Travis Build Status [![Build Status](https://travis-ci.org/Ritayu09/Microsoft-API-Package.svg?branch=master)](https://travis-ci.org/Ritayu09/Microsoft-API-Package)
 
 #### Contributions Code of Conduct
 
